@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | Rasaviyana System</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Custom CSS (same as login) -->
+    <link rel="stylesheet" href="login.css">
+    <style>
+        /* Wider card for registration to fit more fields */
+        .auth-container {
+            max-width: 500px;
+        }
+    </style>
+</head>
+
+<body class="auth-body">
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="auth-logo">
+                    <i data-lucide="user-plus"></i>
+                </div>
+                <h2>Create Account</h2>
+                <p>Sign Up to access the system</p>
+            </div>
+
+            <form id="registration-form" class="auth-form">
+                <div class="form-group">
+                    <label for="reg-username">Username</label>
+                    <div class="input-icon-wrapper">
+                        <i data-lucide="user" class="input-icon"></i>
+                        <input type="text" id="reg-username" name="username" placeholder="Enter your username" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="reg-fullname">Full Name</label>
+                    <div class="input-icon-wrapper">
+                        <i data-lucide="id-card" class="input-icon"></i>
+                        <input type="text" id="reg-fullname" name="fullname" placeholder="Enter your full name" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="reg-email">Email</label>
+                    <div class="input-icon-wrapper">
+                        <i data-lucide="mail" class="input-icon"></i>
+                        <input type="email" id="reg-email" name="email" placeholder="Enter your email">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="reg-phone">Phone</label>
+                    <div class="input-icon-wrapper">
+                        <i data-lucide="phone" class="input-icon"></i>
+                        <input type="text" id="reg-phone" name="phone" placeholder="Enter your phone number">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="reg-password">Password</label>
+                    <div class="input-icon-wrapper">
+                        <i data-lucide="lock" class="input-icon"></i>
+                        <input type="password" id="reg-password" name="password" placeholder="Create a password" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="reg-confirm-password">Confirm Password</label>
+                    <div class="input-icon-wrapper">
+                        <i data-lucide="shield-check" class="input-icon"></i>
+                        <input type="password" id="reg-confirm-password" name="confirm_password" placeholder="Confirm your password" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary btn-block btn-lg">
+                    <span class="btn-text">Register</span>
+                    <i data-lucide="user-check" class="btn-icon-right"></i>
+                </button>
+            </form>
+
+            <div id="reg-message" class="auth-message"></div>
+
+            <div class="auth-footer">
+                <p>Already have an account? <a href="index.php">Sign In</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        document.getElementById('registration-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const username = document.getElementById('reg-username').value.trim();
+            const fullname = document.getElementById('reg-fullname').value.trim();
+            const email    = document.getElementById('reg-email').value.trim();
+            const phone    = document.getElementById('reg-phone').value.trim();
+            const password = document.getElementById('reg-password').value;
+            const confirm  = document.getElementById('reg-confirm-password').value;
+            const msg      = document.getElementById('reg-message');
+            const btn      = this.querySelector('button[type="submit"]');
+
+            // Client-side validation
+            if (password !== confirm) {
+                msg.style.color = '#e11d48';
+                msg.textContent = 'Passwords do not match!';
+                return;
+            }
+
+            if (password.length < 6) {
+                msg.style.color = '#e11d48';
+                msg.textContent = 'Password must be at least 6 characters.';
+                return;
+            }
+
+            // Show loading state
+            btn.disabled = true;
+            btn.querySelector('.btn-text').textContent = 'Registering...';
+            msg.textContent = '';
+
+            try {
+                const response = await fetch('backend/api/register.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, fullname, email, phone, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    msg.style.color = '#16a34a';
+                    msg.textContent = '✓ Registration successful! Redirecting to login...';
+                    setTimeout(() => { window.location.href = 'index.php'; }, 1800);
+                } else {
+                    msg.style.color = '#e11d48';
+                    msg.textContent = data.error || 'Registration failed. Please try again.';
+                    btn.disabled = false;
+                    btn.querySelector('.btn-text').textContent = 'Register';
+                }
+            } catch (err) {
+                msg.style.color = '#e11d48';
+                msg.textContent = 'Network error. Please check your connection.';
+                btn.disabled = false;
+                btn.querySelector('.btn-text').textContent = 'Register';
+            }
+        });
+    </script>
+</body>
+
+</html>

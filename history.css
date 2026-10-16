@@ -1,0 +1,201 @@
+.history-month-card {
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .month-header {
+            background-color: var(--sidebar-bg);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .history-table-unified {
+            width: 100%;
+            border-collapse: collapse;
+            white-space: nowrap;
+        }
+
+        .history-table-unified th,
+        .history-table-unified td {
+            padding: 14px 15px;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: top;
+        }
+
+        .history-table-unified th {
+            background: #fdfdfd;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .history-table-unified td {
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Monthly Summary Footer Styles */
+        .history-summary-footer {
+            background-color: #fcfcfc;
+            padding: 20px;
+            border-top: 2px solid var(--border-color);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-item-box {
+            padding: 15px;
+            border-radius: 8px;
+            background: white;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .stat-item-box.revenue {
+            border-left: 4px solid var(--success-color);
+        }
+
+        .stat-item-box.outstanding {
+            border-left: 4px solid var(--danger-color);
+        }
+
+        .stat-item-box.returns {
+            border-left: 4px solid var(--sidebar-hover);
+        }
+
+        .stat-item-box span {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .stat-item-box strong {
+            font-size: 1.25rem;
+            color: var(--text-main);
+        }
+
+        .payment-type-tag {
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-right: 5px;
+            text-transform: uppercase;
+        }
+
+        .tag-current {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .tag-outstanding {
+            background: #fff3e0;
+            color: #e65100;
+        }
+
+        /* Mobile Responsiveness for History Page */
+        @media (max-width: 768px) {
+            .section-header {
+                flex-direction: column !important;
+                align-items: center !important;
+                text-align: center;
+                gap: 15px !important;
+            }
+
+            .section-header>div {
+                align-items: center !important;
+            }
+
+            .outstanding-badge {
+                font-size: 0.75rem !important;
+                padding: 6px 10px !important;
+            }
+
+            .month-header {
+                flex-direction: column;
+                gap: 8px;
+                text-align: center;
+                padding: 15px;
+            }
+
+            .month-header h3 {
+                font-size: 1rem;
+            }
+
+            /* Make table scrollable horizontally */
+            .history-month-card {
+                overflow-x: auto;
+            }
+
+            .history-table-unified {
+                min-width: 600px;
+            }
+
+            .history-table-unified th,
+            .history-table-unified td {
+                padding: 10px 12px;
+                font-size: 0.8rem;
+            }
+
+            /* Summary footer grid */
+            .history-summary-footer {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+                padding: 15px;
+            }
+
+            .stat-item-box {
+                padding: 12px;
+            }
+
+            .stat-item-box span {
+                font-size: 0.7rem;
+            }
+
+            .stat-item-box strong {
+                font-size: 1rem;
+            }
+
+            #history-shop-name {
+                font-size: 1.2rem !important;
+            }
+
+            #history-shop-details {
+                font-size: 0.8rem !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .history-summary-footer {
+                grid-template-columns: 1fr;
+            }
+
+            .top-bar {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .top-bar h1 {
+                font-size: 1.1rem !important;
+                order: 2;
+                width: 100%;
+                text-align: center;
+            }
+
+            .btn-text {
+                order: 1;
+            }
+
+            .batch-btn {
+                order: 3;
+                margin-left: 0;
+            }
+        }
